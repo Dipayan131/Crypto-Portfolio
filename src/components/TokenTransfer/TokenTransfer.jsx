@@ -47,7 +47,7 @@ export default function TokenTransfer() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 space-y-6 bg-gray-50 min-h-screen">
+    <div className="flex flex-col items-center p-4 space-y-6 bg-gray-50">
       <button 
         onClick={connectWallet}
         className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-150 ease-in-out"

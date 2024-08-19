@@ -1,13 +1,15 @@
-// index.js or App.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import { AppProvider } from './contexts/AppContext';
-import './index.css'
+import './index.css';
 
-ReactDOM.render(
+// Create a root.
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the App component inside the root.
+root.render(
   <AppProvider>
     <App />
-  </AppProvider>,
-  document.getElementById('root')
+  </AppProvider>
 );
