@@ -8,9 +8,11 @@ const HistoricalData = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [historicalData, setHistoricalData] = useState([]);
+  const [tokenSymbol, setTokenSymbol] = useState('BTC');
+
+  const tokenOptions = ['BTC', 'ETH', 'LTC', 'XRP', 'BCH', 'ADA', 'DOT', 'LINK', 'XLM', 'BNB'];
 
   const fetchHistoricalData = async () => {
-    const tokenSymbol = 'BTC'; // Replace with the token symbol, e.g., 'BTC', 'ETH', 'DAI'
     const baseCurrency = 'USD'; // Base currency for comparison, usually 'USD'
     const apiKey = '69c12aa2d66a0069427aa5c2f2c976ccf492578d50bb77e6512e6c15487c70e3'; // Replace with your actual API key
     const startTimestamp = Math.floor(new Date(startDate).getTime() / 1000);
@@ -36,22 +38,49 @@ const HistoricalData = () => {
   };
 
   return (
-    <div className="historical-data p-4 bg-gray-100 rounded-lg shadow-md">
-      <div className="date-pickers flex justify-between mb-4">
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="p-2 border rounded" />
-        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} className="p-2 border rounded" />
-        <button onClick={fetchHistoricalData} className="p-2 bg-blue-500 text-white rounded">Fetch Historical Data</button>
+    <div className="historical-data p-6 bg-gray-800 rounded-2xl shadow-lg h-[84%] w-[80%] mt-8">
+      <div className="date-pickers flex items-center justify-between mb-6">
+        <DatePicker 
+          selected={startDate} 
+          onChange={(date) => setStartDate(date)} 
+          className="p-3 border border-gray-300 rounded-lg bg-gray-700 text-white placeholder-gray-400"
+          placeholderText="Start Date"
+        />
+        <DatePicker 
+          selected={endDate} 
+          onChange={(date) => setEndDate(date)} 
+          className="p-3 border border-gray-300 rounded-lg bg-gray-700 text-white placeholder-gray-400"
+          placeholderText="End Date"
+        />
+        <select
+          value={tokenSymbol}
+          onChange={(e) => setTokenSymbol(e.target.value)}
+          className="p-3 border border-gray-300 rounded-lg bg-gray-700 text-white mx-2"
+        >
+          {tokenOptions.map((token) => (
+            <option key={token} value={token}>
+              {token}
+            </option>
+          ))}
+        </select>
+        <button 
+          onClick={fetchHistoricalData} 
+          className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+        >
+          Fetch Historical Data
+        </button>
       </div>
-      <LineChart width={600} height={300} data={historicalData} className="mx-auto">
+      <LineChart width={800} height={400} data={historicalData} className="mx-auto">
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
+        <XAxis dataKey="date" stroke="#ffffff" />
+        <YAxis stroke="#ffffff" />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="balance" stroke="#8884d8" />
       </LineChart>
     </div>
   );
+  
 };
 
 export default HistoricalData;

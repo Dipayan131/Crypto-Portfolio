@@ -11,27 +11,32 @@ export default function TokenTransfer() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (window.ethereum) {
-      const web3Instance = new Web3(window.ethereum);
-      setWeb3(web3Instance);
-      const contractInstance = new web3Instance.eth.Contract(
-        SimpleTransferABI,
-        '0x9E8d3d3c3b238D54A8B3C7592D824F02C826Ff42' // Replace with your deployed contract address
-      );
-      setContract(contractInstance);
-    } else {
-      alert('MetaMask is not installed. Please install it to use this feature.');
-    }
+    const initializeWeb3AndConnectWallet = async () => {
+      if (window.ethereum) {
+        try {
+          const web3Instance = new Web3(window.ethereum);
+          setWeb3(web3Instance);
+  
+          // Request accounts and set the selected account
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          setAccount(accounts[0]);
+  
+          const contractInstance = new web3Instance.eth.Contract(
+            SimpleTransferABI,
+            '0x9E8d3d3c3b238D54A8B3C7592D824F02C826Ff42' // Replace with your deployed contract address
+          );
+          setContract(contractInstance);
+        } catch (error) {
+          console.error("Error connecting to MetaMask:", error);
+        }
+      } else {
+        alert('MetaMask is not installed. Please install it to use this feature.');
+      }
+    };
+  
+    initializeWeb3AndConnectWallet();
   }, []);
-
-  const connectWallet = async () => {
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setAccount(accounts[0]);
-    } catch (error) {
-      console.error("Error connecting to MetaMask:", error);
-    }
-  };
+  
 
   const handleTransfer = async () => {
     if (contract && account) {
@@ -47,40 +52,30 @@ export default function TokenTransfer() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 space-y-6 bg-gray-50">
+    <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6 flex flex-col justify-center items-center m-auto mt-36">
+      <input 
+        type="text" 
+        placeholder="Recipient Address" 
+        value={recipientAddress}
+        onChange={(e) => setRecipientAddress(e.target.value)}
+        className="w-full px-5 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+      />
+      <input 
+        type="number" 
+        placeholder="Amount (ETH)" 
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="w-full px-5 py-3 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+      />
       <button 
-        onClick={connectWallet}
-        className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-150 ease-in-out"
+        onClick={handleTransfer}
+        className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-150 ease-in-out"
       >
-        {account ? `Connected: ${account}` : 'Connect Wallet'}
+        Transfer Ether
       </button>
-      
-      {account && (
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md space-y-4">
-          <input 
-            type="text" 
-            placeholder="Recipient Address" 
-            value={recipientAddress}
-            onChange={(e) => setRecipientAddress(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-          />
-          <input 
-            type="number" 
-            placeholder="Amount (ETH)" 
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
-          />
-          <button 
-            onClick={handleTransfer}
-            className="w-full bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-150 ease-in-out"
-          >
-            Transfer Ether
-          </button>
-          {message && <p className="text-red-500 text-center">{message}</p>}
-        </div>
-      )}
+      {message && <p className="text-red-400 text-center text-sm">{message}</p>}
     </div>
   );
+  
   
 };

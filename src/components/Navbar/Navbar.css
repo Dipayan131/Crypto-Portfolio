@@ -1,0 +1,5 @@
+/* In your CSS file or within a <style> block */
+.text-stroke {
+  -webkit-text-stroke: 0.75px white; /* For WebKit browsers */
+  text-stroke: 0.75px white; /* For other browsers */
+}
