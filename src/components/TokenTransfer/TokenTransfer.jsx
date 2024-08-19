@@ -52,7 +52,8 @@ export default function TokenTransfer() {
   };
 
   return (
-    <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6 flex flex-col justify-center items-center m-auto mt-36">
+    <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6 flex flex-col justify-center items-center m-auto mt-32">
+      <div className='text-white text-3xl font-bold'>Token Transfer</div>
       <input 
         type="text" 
         placeholder="Recipient Address" 

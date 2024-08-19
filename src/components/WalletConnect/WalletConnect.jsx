@@ -65,7 +65,7 @@ export default function WalletConnect() {
 
   return (
     <div className="flex flex-col justify-center items-center h-[85vh] p-4">
-  <div className="bg-gray-700 p-8 rounded-lg shadow-lg h-auto max-w-md">
+  <div className="bg-gray-800 p-8 rounded-lg shadow-lg h-auto max-w-md">
     <h1 className="text-3xl font-bold mb-4 text-center text-gray-100">
       MetaMask Wallet Connection
     </h1>

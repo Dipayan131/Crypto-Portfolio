@@ -38,7 +38,7 @@ const HistoricalData = () => {
   };
 
   return (
-    <div className="historical-data p-6 bg-gray-800 rounded-2xl shadow-lg h-[84%] w-[80%] mt-8">
+    <div className="historical-data p-6 bg-gray-800 rounded-2xl shadow-lg h-[84%] w-[80%]">
       <div className="date-pickers flex items-center justify-between mb-6">
         <DatePicker 
           selected={startDate} 
@@ -70,7 +70,7 @@ const HistoricalData = () => {
           Fetch Historical Data
         </button>
       </div>
-      <LineChart width={800} height={400} data={historicalData} className="mx-auto">
+      <LineChart width={750} height={400} data={historicalData} className="mx-auto">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" stroke="#ffffff" />
         <YAxis stroke="#ffffff" />
