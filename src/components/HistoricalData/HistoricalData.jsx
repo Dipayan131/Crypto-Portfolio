@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const HistoricalData = () => {
+const HistoricalData = ({ isSidebarOpen }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [historicalData, setHistoricalData] = useState([]);
   const [tokenSymbol, setTokenSymbol] = useState('BTC');
+  const [width, setWidth] = useState(isSidebarOpen ? 700 : 1000); // Initial width
 
-  const tokenOptions = ['BTC', 'ETH', 'LTC', 'XRP', 'BCH', 'ADA', 'DOT', 'LINK', 'XLM', 'BNB'];
+  const tokenOptions = [
+    { label: 'Bitcoin', symbol: 'BTC' },
+    { label: 'Ethereum', symbol: 'ETH' },
+    { label: 'Litecoin', symbol: 'LTC' },
+    { label: 'Ripple', symbol: 'XRP' },
+    { label: 'Cardano', symbol: 'ADA' },
+    { label: 'Polygon', symbol: 'MATIC' },
+    { label: 'Chainlink', symbol: 'LINK' },
+    { label: 'Uniswap', symbol: 'UNI' },
+    { label: 'Aave', symbol: 'AAVE' },
+    { label: 'Solana', symbol: 'SOL' },
+  ];
+
+  useEffect(() => {
+    setWidth(isSidebarOpen ? 700 : 1000);
+  }, [isSidebarOpen]);
 
   const fetchHistoricalData = async () => {
     const baseCurrency = 'USD'; // Base currency for comparison, usually 'USD'
@@ -23,7 +39,7 @@ const HistoricalData = () => {
     try {
       const response = await axios.get(url);
       const data = response.data.Data.Data
-        .filter(entry => {
+        .filter((entry) => {
           const entryDate = new Date(entry.time * 1000);
           return entryDate >= startDate && entryDate <= endDate;
         })
@@ -38,8 +54,8 @@ const HistoricalData = () => {
   };
 
   return (
-    <div className="historical-data p-6 bg-gray-800 rounded-2xl shadow-lg h-[84%] w-[80%]">
-      <div className="date-pickers flex items-center justify-between mb-6">
+    <div className="historical-data p-6 bg-gray-800 rounded-2xl shadow-lg h-[84%] w-[80%] flex flex-col items-center justify-center">
+      <div className="date-pickers flex items-center justify-between mb-6 w-full">
         <DatePicker 
           selected={startDate} 
           onChange={(date) => setStartDate(date)} 
@@ -57,9 +73,9 @@ const HistoricalData = () => {
           onChange={(e) => setTokenSymbol(e.target.value)}
           className="p-3 border border-gray-300 rounded-lg bg-gray-700 text-white mx-2"
         >
-          {tokenOptions.map((token) => (
-            <option key={token} value={token}>
-              {token}
+          {tokenOptions.map(({ label, symbol }) => (
+            <option key={symbol} value={symbol}>
+              {`${label} (${symbol})`}
             </option>
           ))}
         </select>
@@ -70,17 +86,18 @@ const HistoricalData = () => {
           Fetch Historical Data
         </button>
       </div>
-      <LineChart width={750} height={400} data={historicalData} className="mx-auto">
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" stroke="#ffffff" />
-        <YAxis stroke="#ffffff" />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="balance" stroke="#8884d8" />
-      </LineChart>
+      <div className="flex justify-center w-full">
+        <LineChart width={width} height={400} data={historicalData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" stroke="#ffffff" />
+          <YAxis stroke="#ffffff" />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="balance" stroke="#8884d8" />
+        </LineChart>
+      </div>
     </div>
   );
-  
 };
 
 export default HistoricalData;
