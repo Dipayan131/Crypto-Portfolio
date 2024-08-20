@@ -24,6 +24,7 @@ export default function WalletConnect() {
         .then((result) => {
           accountChanged(result[0]);
           setWalletConnectStatus(true);
+          navigate('/dashboard')
         })
         .catch((err) => {
           setErrorMessage(`Error connecting to wallet: ${err.message}`);
@@ -33,16 +34,6 @@ export default function WalletConnect() {
     }
   };
 
-  const connectWithAddress = () => {
-    const address = accountAddressInput.trim();
-    if (ethers.utils.isAddress(address)) {
-      accountChanged(address);
-      setWalletConnectStatus(true);
-      navigate('/dashboard')
-    } else {
-      setErrorMessage("Invalid address");
-    }
-  };
 
   const accountChanged = (accountName) => {
     setDefaultAccount(accountName);
@@ -70,15 +61,12 @@ export default function WalletConnect() {
       MetaMask Wallet Connection
     </h1>
     <div className="flex justify-center mb-4">
-      {!walletConnectStatus && (
-        <Link
-          to="/dashboard"
+        <button
           onClick={connectWallet}
           className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-150 ease-in-out"
         >
           Connect Wallet
-        </Link>
-      )}
+        </button>
     </div>
 
     {/* OR separator */}
@@ -98,7 +86,7 @@ export default function WalletConnect() {
         className="border border-gray-300 rounded-lg px-4 py-2 mb-2 w-full"
       />
       <button
-        onClick={connectWithAddress}
+        onClick={connectWallet}
         className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-150 ease-in-out"
       >
         Connect with Address
