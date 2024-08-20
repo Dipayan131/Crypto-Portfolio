@@ -24,7 +24,7 @@ export default function WalletDetails() {
                 <h1 className="text-4xl font-extrabold mb-6 text-center">Your Wallet</h1>
                 <div className="mb-4 flex items-center">
                     <strong className="text-lg">Your Account:</strong>
-                    <p className="text-base font-medium mt-1 break-all text-gray-500 ml-2">
+                    <p className="text-base font-medium mt-1 break-all text-gray-300 ml-2">
                         {truncateAddress(defaultAccount)}
                     </p>
                     <FiCopy 
@@ -36,7 +36,7 @@ export default function WalletDetails() {
                 </div>
                 <div>
                     <strong className="text-lg">Balance:</strong>
-                    <p className="text-base font-medium mt-1 text-gray-500">{userBalance} ETH</p>
+                    <p className="text-base font-medium mt-1 text-gray-300">{userBalance} ETH</p>
                 </div>
             </div>
         </div>
