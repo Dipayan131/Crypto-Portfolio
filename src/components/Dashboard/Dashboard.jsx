@@ -54,7 +54,7 @@ export default function Dashboard() {
           <div className="w-full h-[50%]">
             <WalletDetails />
           </div>
-          <div className="w-full h-[50%] flex items-center relative">
+          <div className="w-full h-[50%] flex justify-center items-center relative">
             <TokenBalances />
           </div>
         </div>
@@ -68,26 +68,32 @@ export default function Dashboard() {
       <div
         className={`w-full h-full transition-all duration-300 ease-in-out relative`}
       >
-        <div className="h-12 bg-gray-800 text-white flex items-center">
-          <div
-            className={`w-1/2 text-center py-3 cursor-pointer ${
-              mainTab === "Historical Data"
-                ? "bg-gray-700"
-                : "hover:bg-gray-600"
-            }`}
-            onClick={() => setMainTab("Historical Data")}
-          >
-            Historical Data
-          </div>
-          <div
-            className={`w-1/2 text-center py-3 cursor-pointer ${
-              mainTab === "Token Transfer" ? "bg-gray-700" : "hover:bg-gray-600"
-            }`}
-            onClick={() => setMainTab("Token Transfer")}
-          >
-            Token Transfer
-          </div>
-        </div>
+        <div className="h-12 bg-gray-800 text-white flex items-center relative">
+  <div
+    className={`w-1/2 text-center py-3 cursor-pointer relative z-10 transition-all duration-300 ease-in-out ${
+      mainTab === "Historical Data" ? "text-white" : "text-gray-400 hover:text-white"
+    }`}
+    onClick={() => setMainTab("Historical Data")}
+  >
+    Historical Data
+  </div>
+  <div
+    className={`w-1/2 text-center py-3 cursor-pointer relative z-10 transition-all duration-300 ease-in-out ${
+      mainTab === "Token Transfer" ? "text-white" : "text-gray-400 hover:text-white"
+    }`}
+    onClick={() => setMainTab("Token Transfer")}
+  >
+    Token Transfer
+  </div>
+
+  {/* Animated Background */}
+  <div
+    className={`absolute top-0 left-0 w-1/2 h-full bg-gray-700 rounded-3xl transition-all duration-500 ease-in-out ${
+      mainTab === "Token Transfer" ? "transform translate-x-full" : ""
+    }`}
+  ></div>
+</div>
+
         <div className="w-full h-full flex justify-center bg-[#1a1b1e]/60 relative">
           <div className="w-full h-full flex flex-col items-center justify-center relative">
             {!isSidebarOpen && (
@@ -100,7 +106,7 @@ export default function Dashboard() {
             )}
             {mainTab === "Historical Data" ? (
               <>
-                <HistoricalData />
+                <HistoricalData isSidebarOpen={isSidebarOpen} />
               </>
             ) : (
               <TokenTransfer />
