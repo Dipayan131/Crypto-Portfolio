@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import HistoricalData from "../HistoricalData/HistoricalData";
 import TokenTransfer from "../TokenTransfer/TokenTransfer";
 import WalletDetails from "../WalletDetails/WalletDetails";
-import TokenBalances from "../TokenBalances/TokenBalances";
+import CryptoPrices from "../CryptoPrices/CryptoPrices";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Dashboard() {
@@ -25,17 +25,15 @@ export default function Dashboard() {
 
   const toggleSidebar = () => {
     if (isSidebarOpen) {
-      // Hide components and then close sidebar
       setIsComponentVisible(false);
       setTimeout(() => {
         setIsSidebarOpen(false);
-      }, 300); // Match the duration of the closing animation
+      }, 300);
     } else {
-      // Open sidebar and then show components
       setIsSidebarOpen(true);
       setTimeout(() => {
         setIsComponentVisible(true);
-      }, 300); // Match the duration of the opening animation
+      }, 300);
     }
   };
 
@@ -55,7 +53,7 @@ export default function Dashboard() {
             <WalletDetails />
           </div>
           <div className="w-full h-[50%] flex justify-center items-center relative">
-            <TokenBalances />
+            <CryptoPrices />
           </div>
         </div>
         <div

@@ -5,7 +5,13 @@
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "to",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "recipient",
 				"type": "address"
 			},
 			{
@@ -22,13 +28,8 @@
 		"inputs": [
 			{
 				"internalType": "address payable",
-				"name": "_to",
+				"name": "recipient",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
 			}
 		],
 		"name": "transferEther",
@@ -37,7 +38,16 @@
 		"type": "function"
 	},
 	{
-		"stateMutability": "payable",
-		"type": "receive"
+		"inputs": [],
+		"name": "getContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]

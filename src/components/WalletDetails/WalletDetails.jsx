@@ -29,8 +29,9 @@ export default function WalletDetails() {
                     </p>
                     <FiCopy 
                         onClick={copyToClipboard} 
-                        className="ml-4 text-blue-500 cursor-pointer hover:text-blue-600"
-                        size={24}
+                        className="ml-2 text-blue-500 cursor-pointer hover:text-blue-600"
+                        size={20}
+                        title='Copy Address to Clipboard'
                     />
                 </div>
                 <div>
