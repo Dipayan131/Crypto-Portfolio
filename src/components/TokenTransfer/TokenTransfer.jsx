@@ -23,7 +23,7 @@ export default function TokenTransfer() {
   
           const contractInstance = new web3Instance.eth.Contract(
             SimpleTransferABI,
-            '0x9E8d3d3c3b238D54A8B3C7592D824F02C826Ff42' // Replace with your deployed contract address
+            '0x9e940683A95D955D261A66559008cb6D6c7edeb8' // Replace with your deployed contract address
           );
           setContract(contractInstance);
         } catch (error) {
